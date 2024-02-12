@@ -26,4 +26,4 @@ def filter_datum(fields: List[str],
                                 field + "=" + redaction + separator,
                                 message)
 
-        return msg_obfuscated
+   return msg_obfuscated
