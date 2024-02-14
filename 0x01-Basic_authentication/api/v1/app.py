@@ -23,7 +23,7 @@ if auth:
 @app.before_request
 def before_request() -> str:
     """
-    run this function before each request 
+    run this function before each request
     """
     if auth is None:
         return
@@ -39,7 +39,6 @@ def before_request() -> str:
 
     if auth.current_user(request) is None:
         abort(403)
-    
 
 
 @app.errorhandler(404)
