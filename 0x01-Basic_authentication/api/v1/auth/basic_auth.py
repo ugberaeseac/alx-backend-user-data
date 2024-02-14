@@ -8,4 +8,8 @@ Basic Authentication API
 from api.v1.auth.auth import Auth
 
 
-class BasicAuth(Auth):                                                                """                                                                               Basic authentication                                                              inherits from Auth class                                                          """ 
+class BasicAuth(Auth):
+    """
+    Basic Authentication
+    inherits from Auth class
+    """

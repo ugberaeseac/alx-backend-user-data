@@ -23,7 +23,6 @@ elif auth == "basic_auth":
     auth = BasicAuth()
 
 
-
 @app.before_request
 def before_request() -> str:
     """
