@@ -8,8 +8,9 @@ SQLalchemy user model with attributes
     reset_token: a nullable string
 """
 
-from sqlalchemy import Column, String, Integer
+
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
 
 
 Base = declarative_base()
