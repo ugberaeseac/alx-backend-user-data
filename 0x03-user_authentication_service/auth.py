@@ -83,7 +83,7 @@ class Auth:
             return None
         return None
 
-    def get_reset_password_token(email: str) -> str:
+    def get_reset_password_token(self, email: str) -> str:
         """
         Generate a reset password token
         """
