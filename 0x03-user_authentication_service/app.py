@@ -6,7 +6,6 @@ Basic Flask App
 
 from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
-from db import DB
 
 
 app = Flask(__name__)
@@ -78,6 +77,19 @@ def profile():
     try:
         user = AUTH.get_user_from_session_id(session_id)
         return jsonify({"email": user.email}), 200
+    except Exception:
+        abort(403)
+
+
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def get_reset_password_token():
+    """
+    Get reset password token route
+    """
+    email = request.form.get('email')
+    try:
+        token = AUTH.get_reset_password_token(email)
+        return jsonify({"email": email, "reset_token": token}), 200
     except Exception:
         abort(403)
 
