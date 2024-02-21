@@ -68,6 +68,7 @@ def logout():
     except Exception:
         abort(403)
 
+
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile():
     """
