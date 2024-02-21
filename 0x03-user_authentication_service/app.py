@@ -63,11 +63,10 @@ def logout():
     session_id = request.cookies.get('session_id')
     try:
         user = AUTH.get_user_from_session_id(session_id)
+        AUTH.destroy_session(user.id)
+        return redirect('/')
     except Exception:
         abort(403)
-    else:
-        AUTH.destroy_session(user.id)
-        return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
