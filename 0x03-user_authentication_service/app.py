@@ -4,7 +4,7 @@ Basic Flask App
 """
 
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 from db import DB
 
@@ -53,6 +53,21 @@ def login():
         response.set_cookie('session_id', session_id)
         return response
     abort(401)
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """
+    logout a user
+    """
+    session_id = request.cookies.get('session_id')
+    try:
+        user = AUTH.get_user_from_session_id(session_id)
+    except Exception:
+        abort(403)
+    else:
+        AUTH.destroy_session(user.id)
+        return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
