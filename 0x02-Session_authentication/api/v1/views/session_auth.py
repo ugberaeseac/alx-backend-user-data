@@ -17,25 +17,29 @@ def auth_session() -> str:
     auth session login route
     """
     email = request.form.get('email')
-    if not email:
+    if email is None:
         return jsonify({"error": "email missing"}), 400
     password = request.form.get('password')
-    if not password:
-        return ({"error": "email missing"}), 400
+    if password is None:
+        return ({"error": "password missing"}), 400
 
-    users = User.search({'email': email})
-    if not users:
+    try:
+        users = User.search({'email': email})
+    except Exception:
         return jsonify({"error": "no user found for this email"}), 404
-    for user in users:
-        if user.is_valid_password(password):
-            from api.v1.app import auth
-            session_id = auth.create_session(user.id)
-            session_name = getenv("SESSION_NAME")
-            user_json = jsonify(user.to_json())
-            user_json.set_cookie(session_name, session_id)
-            return user_json
-        else:
-            return jsonify({'error': 'wrong password'}), 401
+    else:
+        for user in users:
+            try:
+                user.is_valid_password(password)
+            except Exception:
+                return jsonify({"error": "wrong password"}), 401             
+            else:
+                from api.v1.app import auth
+                session_id = auth.create_session(user.id)
+                session_name = getenv("SESSION_NAME")
+                user_json = jsonify(user.to_json())
+                user_json.set_cookie(session_name, session_id)
+                return user_json
 
 
 @app_views.route('/auth_session/logout',
