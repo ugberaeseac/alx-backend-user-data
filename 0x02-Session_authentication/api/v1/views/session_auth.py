@@ -29,9 +29,7 @@ def auth_session() -> str:
         return jsonify({"error": "no user found for this email"}), 404
     else:
         for user in users:
-            try:
-                user.is_valid_password(password)
-            except Exception:
+            if not user.is_valid_password(password):
                 return jsonify({"error": "wrong password"}), 401             
             else:
                 from api.v1.app import auth
