@@ -17,10 +17,10 @@ def auth_session() -> str:
     auth session login route
     """
     email = request.form.get('email')
-    if email is None:
+    if not email:
         return jsonify({"error": "email missing"}), 400
     password = request.form.get('password')
-    if password is None:
+    if not password:
         return ({"error": "password missing"}), 400
 
     users = User.search({'email': email})
